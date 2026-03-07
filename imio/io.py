@@ -5,20 +5,20 @@ from PIL import Image
 
 
 def imread(
-    path: str,
+    path: str
 ) -> np.ndarray:
     return np.array(Image.open(path).convert("RGB"))
 
 
 def imwrite(
     path: str,
-    img: np.ndarray,
+    img: np.ndarray
 ) -> None:
     Image.fromarray(img).save(path)
 
 
 def get_id(
-    img: np.ndarray,
+    img: np.ndarray
 ) -> str:
     raw = np.ascontiguousarray(img).tobytes()
     digest = hashlib.md5(raw).hexdigest()[:8]
