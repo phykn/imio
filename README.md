@@ -31,7 +31,7 @@ img = imio.imread("path/to/image.png")
 print(img.shape)  # e.g., (H, W, 3)
 
 # 2. Generate a unique image ID 
-uid = imio.image_id(img)
+uid = imio.get_id(img)
 print(uid)  # e.g., 'g8f2d5a3' (8-character hash starting with a letter)
 
 # 3. Write an image
