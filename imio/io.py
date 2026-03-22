@@ -1,18 +1,28 @@
 import hashlib
+from pathlib import Path
+
 import numpy as np
+from PIL import Image, UnidentifiedImageError
 
-from PIL import Image
 
-
-def imread(path: str) -> np.ndarray:
-    return np.array(Image.open(path).convert("RGB"))
+def imread(path: str | Path) -> np.ndarray:
+    try:
+        return np.array(Image.open(path).convert("RGB"))
+    except FileNotFoundError:
+        raise FileNotFoundError(f"Image not found at path: {path}")
+    except UnidentifiedImageError:
+        raise ValueError(f"Cannot identify image file: {path}")
 
 
 def imwrite(
-    path: str,
+    path: str | Path,
     img: np.ndarray,
+    **kwargs,
 ) -> None:
-    Image.fromarray(img).save(path)
+    try:
+        Image.fromarray(img).save(path, **kwargs)
+    except Exception as e:
+        raise RuntimeError(f"Error saving image to {path}: {e}")
 
 
 def get_id(img: np.ndarray) -> str:
