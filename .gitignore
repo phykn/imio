@@ -1,32 +1,27 @@
 # Python
 __pycache__/
 *.py[cod]
-*$py.class
-*.so
 
-# Packages
+# Build artifacts
 build/
 dist/
 *.egg-info/
 .eggs/
-imio.egg-info/
 
-# Jupyter Notebooks
-*.ipynb
-.ipynb_checkpoints/
-
-# Virtual Environments
-venv/
+# Virtual environments
 .venv/
+venv/
 env/
 .env/
 
-# IDE / Editor
+# Tooling / editor
+.ruff_cache/
+.agent/
 .vscode/
 .idea/
 *.swp
 *.swo
 
-# OS generated files
+# OS
 .DS_Store
 Thumbs.db
