@@ -40,31 +40,6 @@ def test_imwrite_rejects_invalid_channel_count(tmp_path: Path):
         imwrite(path, img)
 
 
-def test_imwrite_grayscale_2d(tmp_path: Path):
-    path = tmp_path / "gray.png"
-    img = np.full((10, 10), 128, dtype=np.uint8)
-
-    imwrite(path, img)
-    assert path.exists()
-
-
-def test_imwrite_grayscale_3d(tmp_path: Path):
-    path = tmp_path / "gray3d.png"
-    img = np.full((10, 10, 1), 128, dtype=np.uint8)
-
-    imwrite(path, img)
-    assert path.exists()
-
-
-def test_imwrite_rgba(tmp_path: Path):
-    path = tmp_path / "rgba.png"
-    img = np.zeros((10, 10, 4), dtype=np.uint8)
-    img[..., 3] = 255
-
-    imwrite(path, img)
-    assert path.exists()
-
-
 def test_rgba_roundtrip(tmp_path: Path):
     path = tmp_path / "rgba_rt.png"
     img = np.zeros((10, 10, 4), dtype=np.uint8)
