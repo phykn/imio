@@ -23,13 +23,13 @@ def imwrite(path: str | Path, img: np.ndarray, **kwargs: Any) -> None:
             f"imwrite expects a 2D or 3D array, got shape={img.shape}"
         )
 
-    if img.ndim == 3 and img.shape[2] not in (1, 3, 4):
-        raise ValueError(
-            "imwrite expects channel count in {1, 3, 4}, "
-            f"got shape={img.shape}"
-        )
-
-    if img.ndim == 3 and img.shape[2] == 1:
-        img = img[:, :, 0]
+    if img.ndim == 3:
+        if img.shape[2] not in (1, 3, 4):
+            raise ValueError(
+                "imwrite expects channel count in {1, 3, 4}, "
+                f"got shape={img.shape}"
+            )
+        if img.shape[2] == 1:
+            img = img[:, :, 0]
 
     Image.fromarray(img).save(path, **kwargs)
