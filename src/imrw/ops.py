@@ -7,11 +7,7 @@ from PIL import Image
 
 def imread(path: str | Path) -> np.ndarray:
     with Image.open(path) as img:
-        if img.mode == "L":
-            return np.array(img)
-        if img.mode == "RGB":
-            return np.array(img)
-        if img.mode == "RGBA":
+        if img.mode in ("L", "RGB", "RGBA"):
             return np.array(img)
         return np.array(img.convert("RGB"))
 
