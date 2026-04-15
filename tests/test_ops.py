@@ -40,7 +40,7 @@ def test_imwrite_rejects_invalid_channel_count(tmp_path: Path):
         imwrite(path, img)
 
 
-def test_rgba_roundtrip(tmp_path: Path):
+def test_rgba_reads_as_rgb(tmp_path: Path):
     path = tmp_path / "rgba_rt.png"
     img = np.zeros((10, 10, 4), dtype=np.uint8)
     img[..., 3] = 255
@@ -49,12 +49,12 @@ def test_rgba_roundtrip(tmp_path: Path):
     imwrite(path, img)
     loaded = imread(path)
 
-    assert loaded.shape == (10, 10, 4)
+    assert loaded.shape == (10, 10, 3)
     assert loaded.dtype == np.uint8
-    assert np.array_equal(img, loaded)
+    assert np.array_equal(img[..., :3], loaded)
 
 
-def test_grayscale_2d_roundtrip(tmp_path: Path):
+def test_grayscale_2d_reads_as_rgb(tmp_path: Path):
     path = tmp_path / "gray_rt.png"
     img = np.full((10, 10), 128, dtype=np.uint8)
     img[0, 0] = 42
@@ -62,17 +62,19 @@ def test_grayscale_2d_roundtrip(tmp_path: Path):
     imwrite(path, img)
     loaded = imread(path)
 
-    assert loaded.shape == (10, 10)
+    assert loaded.shape == (10, 10, 3)
     assert loaded.dtype == np.uint8
-    assert np.array_equal(img, loaded)
+    expected = np.stack([img] * 3, axis=-1)
+    assert np.array_equal(expected, loaded)
 
 
-def test_grayscale_3d_reads_back_as_2d(tmp_path: Path):
+def test_grayscale_3d_reads_as_rgb(tmp_path: Path):
     path = tmp_path / "gray3d_rt.png"
     img = np.full((10, 10, 1), 128, dtype=np.uint8)
 
     imwrite(path, img)
     loaded = imread(path)
 
-    assert loaded.shape == (10, 10)
-    assert np.array_equal(img[:, :, 0], loaded)
+    assert loaded.shape == (10, 10, 3)
+    expected = np.stack([img[:, :, 0]] * 3, axis=-1)
+    assert np.array_equal(expected, loaded)

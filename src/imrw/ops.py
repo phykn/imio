@@ -6,8 +6,6 @@ from PIL import Image
 
 def imread(path: str | Path) -> np.ndarray:
     with Image.open(path) as img:
-        if img.mode in ("L", "RGB", "RGBA"):
-            return np.array(img)
         return np.array(img.convert("RGB"))
 
 
