@@ -24,4 +24,4 @@ def imwrite(path: str | Path, img: np.ndarray, **kwargs) -> None:
         if img.shape[2] == 1:
             img = img[:, :, 0]
 
-    Image.fromarray(img).save(path, **kwargs)
+    Image.fromarray(img).convert("RGB").save(path, **kwargs)
